@@ -1,30 +1,37 @@
-    * --> Alice : Start
-    Alice --> John: "Hello John, how are you?"
-    return: Great!
+participant Sample : long participant name
 
-    John --> Alice: "Great!"
-    return : "WRRRRRY!!"
-    
-    alt : "is fine"
-        // syouryaku return
-        Alice ->> John : "Hello John, how are you?" ;
-    else : tony
-        Alice <<- Tony : "John, can you hear me?" ;
-    else : else
-        Alice --> Willy : "John, can you hear me?" ;
-    end
+timer One : timer
+exit
 
-    John --> John : Karaage!!
-    John --> Alice : figure... ;
-    John --> Tony : smell... ;
-    John --> Willy : Aji... ;
-    return
+start Sample : start
+	Sample --> Another: sync sequence
+	return: sync return
 
-    Alice --> & : Oisii!! ;
+	Other --> Sample: async sequence
+	return : async return
 
-    John --> Alice : "Hi Alice, I can hear you!" ;
-    // post message and meijiteki return
-    John <<- Alice : "I feel great!"
-    return : thanks
+	alt : alt fragment
+	    // comment
+	    Sample ->> Another ,, : async, no sub sequence
+	else : sub case in alt fragment
+	    Sample <<- Other ,, : reverse caller and callee
+	    Note note
+	else : else
+	    Sample --> One ,, : sync, no sub sequence
+	end
 
-    return
+	ref Another,Other : reference
+
+	Another --> Another : self method call
+		Note : note
+		Another --> Sample ,, : method call 
+		Another --> Other ,, : synchronized
+		Another --> One ,, : sub sequence
+	return
+
+	Sample --> & ,, : self method call
+
+exit : exit
+
+signal Other : signal
+exit
