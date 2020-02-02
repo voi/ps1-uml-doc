@@ -20,7 +20,7 @@ start Sample : start
 	    Sample --> One ,, : sync, no sub sequence
 	end
 
-	ref Another,Other : reference
+	ref Another Other : reference
 
 	Another --> Another : self method call
 		Note : note
